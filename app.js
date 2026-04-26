@@ -23,6 +23,7 @@ const difficulties = {
 
 let rawBeatmap = [];
 let activeNotes = [];
+let particles = [];
 let beatmapIndex = 0;
 
 let score = 0;
@@ -154,6 +155,7 @@ playBtn.addEventListener('click', () => {
     
     rawBeatmap = generateBeatmap(selectedSong);
     activeNotes = [];
+    particles = [];
     beatmapIndex = 0;
     score = 0;
     combo = 0;
@@ -268,6 +270,7 @@ function gameLoop() {
                     if (note.type === 'CIRCLE') {
                         score += 300;
                         combo++;
+                        particles.push({x: note.x, y: note.y, type: 'HIT', text: '300', life: 1.0});
                         note.markedForDelete = true;
                         mouseJustClicked = false; // consume click
                     } else if (note.type === 'SLIDER') {
@@ -314,6 +317,7 @@ function gameLoop() {
 
     // Cleanup
     activeNotes = activeNotes.filter(n => !n.markedForDelete);
+    particles = particles.filter(p => p.life > 0);
 
     // Update HUD
     scoreDisplay.innerText = score.toString().padStart(8, '0');
@@ -365,6 +369,27 @@ function gameLoop() {
             
             // Slider ball
             drawCircle(ballX, ballY, diff.circleSize, 'orange', 'red', 4);
+        }
+    });
+
+    // Draw Particles
+    particles.forEach(p => {
+        p.life -= 0.02;
+        if (p.type === 'HIT') {
+            ctx.globalAlpha = Math.max(0, p.life);
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 40px "Fredoka One"';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(p.text, p.x, p.y - (1.0 - p.life) * 50);
+            
+            // Draw expanding ring
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, diff.circleSize + (1.0 - p.life) * 50, 0, Math.PI*2);
+            ctx.strokeStyle = '#00bfff';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            ctx.globalAlpha = 1.0;
         }
     });
 }
