@@ -124,6 +124,7 @@ listenBtn.addEventListener('click', () => {
     if (audioPlayer.paused) {
         audioPlayer.play();
         if (selectedSong === 0) {
+            bgVideo.currentTime = 0; // Ensure it starts from the beginning
             bgVideo.play();
             bgVideo.classList.add('playing');
         }

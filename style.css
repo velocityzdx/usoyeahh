@@ -37,6 +37,7 @@ body, html {
 }
 
 #bg-video {
+    z-index: 2; /* Put above the bg-image so it's not obscured */
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
 }
