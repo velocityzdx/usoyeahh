@@ -81,11 +81,10 @@ function loadSong(index) {
     audioPlayer.src = index === 0 ? 'oceans game st.mp3' : 'oceans game st v2.mp3';
     audioPlayer.load();
     if (index === 0) {
-        bgVideo.style.display = 'block';
         bgVideo.currentTime = 0;
     } else {
-        bgVideo.style.display = 'none';
-        bgVideo.pause();
+        bgVideo.classList.remove('playing');
+        setTimeout(() => bgVideo.pause(), 1500); // Wait for fade out before pausing
     }
 }
 
@@ -124,11 +123,17 @@ diffBtns.forEach(btn => {
 listenBtn.addEventListener('click', () => {
     if (audioPlayer.paused) {
         audioPlayer.play();
-        if (selectedSong === 0) bgVideo.play();
+        if (selectedSong === 0) {
+            bgVideo.play();
+            bgVideo.classList.add('playing');
+        }
         listenBtn.innerText = 'STOP';
     } else {
         audioPlayer.pause();
-        if (selectedSong === 0) bgVideo.pause();
+        if (selectedSong === 0) {
+            bgVideo.classList.remove('playing');
+            setTimeout(() => { if(audioPlayer.paused) bgVideo.pause(); }, 1500);
+        }
         listenBtn.innerText = 'LISTEN';
     }
 });
@@ -143,6 +148,7 @@ playBtn.addEventListener('click', () => {
     if (selectedSong === 0) {
         bgVideo.currentTime = 0;
         bgVideo.play();
+        bgVideo.classList.add('playing');
     }
     
     rawBeatmap = generateBeatmap(selectedSong);
@@ -156,7 +162,8 @@ playBtn.addEventListener('click', () => {
 
 quitBtn.addEventListener('click', () => {
     audioPlayer.pause();
-    bgVideo.pause();
+    bgVideo.classList.remove('playing');
+    setTimeout(() => { if(gameState === 'MENU' && audioPlayer.paused) bgVideo.pause(); }, 1500);
     screens.hud.classList.add('hidden');
     screens.menu.classList.remove('hidden');
     listenBtn.innerText = 'LISTEN';

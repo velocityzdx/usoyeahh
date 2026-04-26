@@ -30,11 +30,19 @@ body, html {
     height: 100%;
     object-fit: cover;
     z-index: 1;
+}
+
+#bg-image {
     opacity: 0.4;
 }
 
 #bg-video {
-    display: none; /* Only show when mp4 is playing */
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+#bg-video.playing {
+    opacity: 0.6;
 }
 
 #game-canvas {
