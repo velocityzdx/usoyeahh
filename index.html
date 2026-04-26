@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>!uso!</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Media -->
+        <video id="bg-video" src="1st song background.mp4" loop muted playsinline></video>
+        <img id="bg-image" src="background.jpg" alt="Background">
+        
+        <audio id="audio-player"></audio>
+
+        <!-- Canvas -->
+        <canvas id="game-canvas" width="1024" height="768"></canvas>
+
+        <!-- UI Overlays -->
+        <div id="ui-layer">
+            
+            <!-- Login Screen -->
+            <div id="login-screen" class="screen">
+                <h1 class="logo">!uso!</h1>
+                <div class="login-box">
+                    <input type="text" id="username-input" placeholder="Enter Username" autocomplete="off" maxlength="15">
+                    <button id="login-btn">PLAY</button>
+                </div>
+            </div>
+
+            <!-- Menu Screen -->
+            <div id="menu-screen" class="screen hidden">
+                <div class="menu-header">
+                    <h2 id="welcome-text">Welcome!</h2>
+                </div>
+                
+                <div class="menu-content">
+                    <div class="song-list">
+                        <h3>Select Track</h3>
+                        <div class="song-item selected" data-song="0">oceans game st.mp3</div>
+                        <div class="song-item" data-song="1">oceans game st v2.mp3</div>
+                    </div>
+
+                    <div class="difficulty-select">
+                        <h3>Select Difficulty</h3>
+                        <div class="diff-buttons">
+                            <button class="diff-btn" data-diff="easy">EASY</button>
+                            <button class="diff-btn selected" data-diff="med">MED</button>
+                            <button class="diff-btn" data-diff="hard">HARD</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="listen-btn" class="secondary-btn">LISTEN</button>
+                        <button id="play-btn" class="primary-btn">PLAY</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gameplay HUD -->
+            <div id="gameplay-hud" class="screen hidden">
+                <div class="hud-top">
+                    <div id="score-display">00000000</div>
+                    <div id="combo-display">x0</div>
+                </div>
+                <button id="quit-btn">QUIT</button>
+            </div>
+
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
